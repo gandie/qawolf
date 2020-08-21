@@ -5,7 +5,7 @@ const buildXpath = (node: Node | null): string => {
   if (!node || node.nodeType !== 1) return '';
 
   const element = node as Element;
-  if (element.id) {
+  if (element.id && typeof element.id.includes === 'function') {
     // xpath has no way to escape quotes so use the opposite
     // https://stackoverflow.com/a/14822893
     const quote = element.id.includes(`'`) ? `"` : `'`;
