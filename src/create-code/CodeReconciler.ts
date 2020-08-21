@@ -3,6 +3,7 @@ import { VirtualCode } from '../build-code/VirtualCode';
 import { patchCode, PATCH_HANDLE } from './patchCode';
 
 const debug = Debug('qawolf:CodeReconciler');
+const always_wait = 'await page.waitForLoadState("networkidle");\n';
 
 type ReconcileOptions = {
   actualCode: string;
@@ -17,7 +18,7 @@ export class CodeReconciler {
     const newLines = this._virtualCode.newLines(virtualCode);
     if (newLines.length < 1) return actualCode;
 
-    const patch = newLines.map((line) => `${line}\n`).join('') + PATCH_HANDLE;
+    const patch = newLines.map((line) => `${line}\n`).join('') + always_wait + PATCH_HANDLE;
     debug(`insert new lines: ${patch}`);
 
     try {
